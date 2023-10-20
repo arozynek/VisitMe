@@ -1,0 +1,23 @@
+@url = http://localhost:5000
+@reservationId = 2
+
+###
+GET {{url}}
+
+###
+GET {{url}}/reservations
+###
+GET {{url}}/reservations/{{reservationId}}
+
+###
+POST {{url}}/reservations
+Content-Type: application/json
+
+{
+    "visitorName": "Ania",
+    "placeToVisit": "stomatologist",
+    "personalID": "951414159"
+}
+
+###
+PUT {{url}}/reservations
