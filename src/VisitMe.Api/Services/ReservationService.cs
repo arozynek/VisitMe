@@ -20,14 +20,24 @@ namespace VisitMe.Api.Services
        
         public int? Create(Reservation reservation)
         {
+
+            var now = DateTime.UtcNow.Date;
+            var pastDays = now.DayOfWeek is DayOfWeek.Sunday? 7 : (int)now.DayOfWeek;
+            var remainingDays = 7 - pastDays;
+
             if (PlaceToVisit.All(x => x != reservation.PlaceToVisit))
             {
                 return default;
             }
 
-            reservation.Date = DateTime.UtcNow.AddDays(1).Date;
+            if(!(reservation.Date.Date > now && reservation.Date.Date < now.AddDays(remainingDays)))
+            {
+                return default;
+            }
+
             var reservationAlreadyExists = Reservations
                 .Any(x => x.PlaceToVisit == reservation.PlaceToVisit && x.Date.Date == reservation.Date.Date);
+
             if (reservationAlreadyExists)
             {
                 return default;
@@ -43,6 +53,10 @@ namespace VisitMe.Api.Services
         {
             var existingReservation = Reservations.SingleOrDefault(x => x.Id == reservation.Id);
             if (existingReservation == null)
+            {
+                return false;
+            }
+            if (existingReservation.Date <= DateTime.UtcNow) 
             {
                 return false;
             }
