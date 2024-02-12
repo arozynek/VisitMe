@@ -26,3 +26,6 @@ Content-Type: application/json
 {
     "personalID": "951414149999"
 }
+###
+DELETE {{url}}/reservations/{{reservationId}}
+
