@@ -14,9 +14,9 @@ POST {{url}}/reservations
 Content-Type: application/json
 
 {
-    "visitorName": "Ania",
-    "placeToVisit": "stomatologist",
-    "personalID": "951414159"
+    "visitorName": "Hnia",
+    "placeToVisit": "surgeon",
+    "personalID": "95141414989"
 }
 
 ###

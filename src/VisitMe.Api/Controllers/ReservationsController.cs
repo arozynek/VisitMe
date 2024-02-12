@@ -15,18 +15,17 @@ namespace VisitMe.Api.Controllers
         };
 
         [HttpGet]
-        public IEnumerable<Reservation> Get() => Reservations;
+        public ActionResult<IEnumerable<Reservation>> Get() => Ok(Reservations);
 
         [HttpGet(template:"{id:int}")]
-        public Reservation Get(int id)
+        public ActionResult<Reservation> Get(int id)
         {
             var reservation = Reservations.SingleOrDefault(x => x.Id == id);
             if (reservation == null)
             {
-                HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
-                return default;
+                return NotFound();
             }
-            return reservation;
+            return Ok(reservation);
         }
 
         [HttpPost]
@@ -34,7 +33,6 @@ namespace VisitMe.Api.Controllers
         {
             if (PlaceToVisit.All(x => x != reservation.PlaceToVisit))
             {
-                HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
                 return BadRequest();
             }
 
