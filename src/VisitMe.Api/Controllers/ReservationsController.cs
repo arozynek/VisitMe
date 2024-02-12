@@ -17,7 +17,7 @@ namespace VisitMe.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Reservation>> Get() => Ok(Reservations);
 
-        [HttpGet(template:"{id:int}")]
+        [HttpGet(template: "{id:int}")]
         public ActionResult<Reservation> Get(int id)
         {
             var reservation = Reservations.SingleOrDefault(x => x.Id == id);
@@ -48,7 +48,18 @@ namespace VisitMe.Api.Controllers
             _id++;
             Reservations.Add(reservation);
 
-            return CreatedAtAction(nameof(Get), new {id = reservation.Id}, null );
+            return CreatedAtAction(nameof(Get), new { id = reservation.Id }, null);
+        }
+        [HttpPut(template:"{id:int}")]
+        public ActionResult Put(int id,Reservation reservation) 
+        {
+            var existingReservation = Reservations.SingleOrDefault(x => x.Id == id);
+            if (existingReservation == null)
+            {
+                return NotFound();
+            }
+            existingReservation.PersonalID = reservation.PersonalID;
+            return NoContent();
         }
     }
 }

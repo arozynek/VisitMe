@@ -1,5 +1,5 @@
 @url = http://localhost:5000
-@reservationId = 2
+@reservationId = 1
 
 ###
 GET {{url}}
@@ -20,4 +20,9 @@ Content-Type: application/json
 }
 
 ###
-PUT {{url}}/reservations
+PUT {{url}}/reservations/{{reservationId}}
+Content-Type: application/json
+
+{
+    "personalID": "951414149999"
+}
